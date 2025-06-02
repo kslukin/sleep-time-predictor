@@ -1,30 +1,31 @@
 import streamlit as st
 import pandas as pd
-import joblib
-import numpy as np
+from sklearn.ensemble import RandomForestRegressor
 
-# Load the trained model
-model = joblib.load("model.pkl")
+# Dummy training data — same structure as original
+df = pd.read_csv("sleeptime_prediction_dataset.csv")
+df = df[(df["SleepTime"] >= 1.0) & (df["SleepTime"] <= 12.0)]
 
-st.set_page_config(page_title="Sleep Predictor", layout="centered")
+X = df.drop(columns=["SleepTime"])
+y = df["SleepTime"]
 
+model = RandomForestRegressor(n_estimators=100, random_state=42)
+model.fit(X, y)
+
+# Interface
 st.title("😴 Sleep Duration Predictor")
-st.markdown("Enter your daily habits below to predict how much you'll sleep tonight.")
+st.markdown("Enter your habits:")
 
-# Input sliders for user features
-workout = st.slider("Workout Time (hours/day)", 0.0, 3.0, 1.0, step=0.1)
-reading = st.slider("Reading Time (hours/day)", 0.0, 3.0, 0.5, step=0.1)
-phone = st.slider("Phone Usage (hours/day)", 0.0, 10.0, 2.0, step=0.1)
-work = st.slider("Work Hours (hours/day)", 0.0, 12.0, 8.0, step=0.1)
-caffeine = st.slider("Caffeine Intake (mg/day)", 0.0, 300.0, 100.0, step=5.0)
-relax = st.slider("Relaxation Time (hours/day)", 0.0, 3.0, 1.0, step=0.1)
+workout = st.slider("Workout Time", 0.0, 3.0, 1.0)
+reading = st.slider("Reading Time", 0.0, 3.0, 1.0)
+phone = st.slider("Phone Time", 0.0, 10.0, 2.0)
+work = st.slider("Work Hours", 0.0, 12.0, 8.0)
+caffeine = st.slider("Caffeine Intake", 0.0, 300.0, 100.0)
+relax = st.slider("Relaxation Time", 0.0, 3.0, 1.0)
 
-# Make prediction
+input_data = pd.DataFrame([[workout, reading, phone, work, caffeine, relax]],
+    columns=X.columns)
+
 if st.button("Predict Sleep Time"):
-    input_data = pd.DataFrame([[workout, reading, phone, work, caffeine, relax]],
-                              columns=["WorkoutTime", "ReadingTime", "PhoneTime", "WorkHours", "CaffeineIntake", "RelaxationTime"])
-    
     prediction = model.predict(input_data)[0]
-
-    st.subheader("Predicted Sleep Duration:")
-    st.success(f"🕒 You are likely to sleep **{prediction:.2f} hours**.")
+    st.success(f"🛌 Predicted sleep duration: **{prediction:.2f} hours**")
