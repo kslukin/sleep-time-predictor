@@ -1,18 +1,16 @@
-# sleep-time-predictor
-
 # 💤 Sleep Time Predictor
 
 A machine learning app that predicts sleep duration based on daily habits using a synthetic dataset.
 
-## 📌 Overview
+## Overview:
 
 This project demonstrates a complete ML pipeline — from data analysis to deployment — using a synthetic dataset simulating the relationship between lifestyle factors and sleep duration.
 
-Live app: [Sleep Time Predictor on Streamlit](https://sleep-time-predictor-shcrdtk9wjtmlqryxecfgn.streamlit.app)
+Live app: [Sleep Time Predictor on Streamlit](https://sleep-time-predictor-cn9auj4h3fixrcvbaz7blg.streamlit.app)
 
 Dataset source: [Kaggle – Sleep Time Prediction](https://www.kaggle.com/datasets/govindaramsriram/sleep-time-prediction)
 
-## 🧠 Project Steps
+## Project Steps:
 
 1. **Data Analysis**  
    Explored and visualized correlations between features such as workout time, phone usage, caffeine intake, and sleep duration.
