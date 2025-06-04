@@ -1,61 +1,80 @@
 import streamlit as st
 import pandas as pd
 import joblib
-import plotly.graph_objects as go
+import plotly.express as px
 
-# Load pre-trained model
+# Load model
 model = joblib.load("model.pkl")
 
-# App title and description
-st.set_page_config(page_title="Sleep Predictor", layout="centered")
-st.title("😴 Sleep Duration Predictor")
-st.markdown("Estimate your sleep duration based on daily habits using a machine learning model.")
+# Title and description
+st.title("Sleep Duration Predictor")
+st.markdown("Adjust your daily activities to see how they influence your sleep time.")
 
-# Sidebar for inputs
-st.sidebar.header("Your Daily Habits")
-workout = st.sidebar.slider("Workout Time (hours)", 0.0, 3.0, 1.0)
-reading = st.sidebar.slider("Reading Time (hours)", 0.0, 3.0, 1.0)
-phone = st.sidebar.slider("Phone Usage Time (hours)", 0.0, 10.0, 2.0)
-work = st.sidebar.slider("Work Hours", 0.0, 12.0, 8.0)
-caffeine = st.sidebar.slider("Caffeine Intake (mg)", 0.0, 300.0, 100.0)
-relax = st.sidebar.slider("Relaxation Time (hours)", 0.0, 3.0, 1.0)
+# Custom CSS for colored sliders
+st.markdown("""
+<style>
+.green .stSlider > div > div > div { background: #a4d4ae; }
+.red .stSlider > div > div > div { background: #f5a3a3; }
+</style>
+""", unsafe_allow_html=True)
 
-# Prepare input for model
-input_data = pd.DataFrame(
-    [[workout, reading, phone, work, caffeine, relax]],
-    columns=["WorkoutTime", "ReadingTime", "PhoneTime", "WorkHours", "CaffeineIntake", "RelaxationTime"]
-)
+# Colored sliders
+with st.container():
+    st.markdown("**Lifestyle Inputs:**")
 
-# Predict and visualize
-if st.button("🧮 Predict Sleep Time"):
+    col1, col2 = st.columns(2)
+
+    with col1:
+        with st.container():
+            st.markdown('<div class="green">', unsafe_allow_html=True)
+            workout = st.slider("Workout Time (hours)", 0.0, 3.0, 1.0, key="w1")
+            st.markdown('</div>', unsafe_allow_html=True)
+
+        with st.container():
+            st.markdown('<div class="green">', unsafe_allow_html=True)
+            reading = st.slider("Reading Time (hours)", 0.0, 3.0, 1.0, key="r1")
+            st.markdown('</div>', unsafe_allow_html=True)
+
+        with st.container():
+            st.markdown('<div class="red">', unsafe_allow_html=True)
+            phone = st.slider("Phone Time (hours)", 0.0, 10.0, 2.0, key="p1")
+            st.markdown('</div>', unsafe_allow_html=True)
+
+    with col2:
+        with st.container():
+            st.markdown('<div class="red">', unsafe_allow_html=True)
+            work = st.slider("Work Hours", 0.0, 12.0, 8.0, key="w2")
+            st.markdown('</div>', unsafe_allow_html=True)
+
+        with st.container():
+            st.markdown('<div class="red">', unsafe_allow_html=True)
+            caffeine = st.slider("Caffeine Intake (mg)", 0.0, 300.0, 100.0, key="c1")
+            st.markdown('</div>', unsafe_allow_html=True)
+
+        with st.container():
+            st.markdown('<div class="green">', unsafe_allow_html=True)
+            relax = st.slider("Relaxation Time (hours)", 0.0, 3.0, 1.0, key="rl1")
+            st.markdown('</div>', unsafe_allow_html=True)
+
+# Make prediction
+input_data = pd.DataFrame([[workout, reading, phone, work, caffeine, relax]],
+    columns=["WorkoutTime", "ReadingTime", "PhoneTime", "WorkHours", "CaffeineIntake", "RelaxationTime"])
+
+if st.button("Predict Sleep Time"):
     prediction = model.predict(input_data)[0]
+    st.success(f"Predicted sleep duration: **{prediction:.2f} hours**")
 
-    st.subheader("🛌 Estimated Sleep Duration")
-    st.success(f"Based on your habits, you may sleep around **{prediction:.2f} hours** tonight.")
+    # Feature contributions (feature importance × value)
+    importance = model.feature_importances_
+    contributions = input_data.values[0] * importance
+    impact_df = pd.DataFrame({
+        "Feature": input_data.columns,
+        "Impact": contributions
+    }).sort_values(by="Impact", ascending=False)
 
-    # Plotly bar chart with recommended range
-    fig = go.Figure()
-    fig.add_trace(go.Bar(
-        x=["You"],
-        y=[prediction],
-        name="Your Predicted Sleep",
-        marker_color="indianred"
-    ))
+    fig = px.bar(impact_df, x="Impact", y="Feature", orientation="h",
+                 title="Estimated Feature Impact on Predicted Sleep Time",
+                 labels={"Impact": "Contribution to Prediction"},
+                 template="simple_white")
 
-    # Recommended sleep range (7–9h)
-    fig.add_shape(
-        type="rect",
-        x0=-0.5, x1=0.5, y0=7, y1=9,
-        fillcolor="LightGreen", opacity=0.3,
-        line_width=0,
-        layer="below"
-    )
-
-    fig.update_layout(
-        title="Sleep Time vs. Recommended Range (7–9 hours)",
-        yaxis_title="Sleep Duration (hours)",
-        showlegend=False,
-        height=400
-    )
-
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig)
