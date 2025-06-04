@@ -30,6 +30,14 @@ st.markdown(
         color: #1f4e79;
         text-align: center;
     }
+    
+    /* Remove white footer/padding */
+    footer, .css-zq5wmm {
+        visibility: hidden;
+        height: 0px;
+        padding: 0px;
+        margin: 0px;
+    }
     </style>
     """,
     unsafe_allow_html=True
