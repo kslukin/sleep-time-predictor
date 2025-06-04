@@ -1,4 +1,32 @@
 import streamlit as st
+st.markdown(
+    """
+    <style>
+    /* Page background */
+    .stApp {
+        background-image: url("https://images.unsplash.com/photo-1509021436665-8f07dbf5bf1d");
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+    }
+
+    /* Card background (inputs, etc.) */
+    .st-emotion-cache-1kyxreq {
+        background-color: rgba(255, 255, 255, 0.85);
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    /* Change title font */
+    h1 {
+        color: #1f4e79;
+        text-align: center;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 import pandas as pd
 import joblib
 import plotly.graph_objects as go
