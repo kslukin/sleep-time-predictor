@@ -25,6 +25,20 @@ st.markdown(
         border-radius: 12px;
         box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
     }
+    /* Remove white footer or ghost block */
+    .st-emotion-cache-zq5wmm, footer {
+        display: none !important;
+        height: 0px !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: transparent !important;
+    }
+
+    html, body, .main {
+        overflow-x: hidden;
+        padding-bottom: 0 !important;
+        margin-bottom: 0 !important;
+    }  
 
     h1, h2, h3 {
         color: #1f4e79;
