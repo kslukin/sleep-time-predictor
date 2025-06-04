@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import joblib
+import plotly.graph_objects as go
 
 # Page config
 st.set_page_config(page_title="Sleep Duration Predictor", layout="wide")
@@ -46,5 +47,35 @@ input_data = pd.DataFrame(
 # Predict
 if st.button("🧮 Predict Sleep Time"):
     prediction = model.predict(input_data)[0]
+
     st.subheader("🛌 Estimated Sleep Duration")
     st.success(f"Based on your habits, you may sleep around **{prediction:.2f} hours** tonight.")
+
+    # Add bar chart
+    fig = go.Figure()
+
+    # Predicted sleep time
+    fig.add_trace(go.Bar(
+        x=["You"],
+        y=[prediction],
+        name="Your Predicted Sleep",
+        marker_color="indianred"
+    ))
+
+    # Recommended range as shaded box
+    fig.add_shape(
+        type="rect",
+        x0=-0.5, x1=0.5, y0=7, y1=9,
+        fillcolor="LightGreen", opacity=0.3,
+        line_width=0,
+        layer="below"
+    )
+
+    fig.update_layout(
+        title="Sleep Time vs. Recommended Range (7–9 hours)",
+        yaxis_title="Sleep Duration (hours)",
+        showlegend=False,
+        height=400
+    )
+
+    st.plotly_chart(fig, use_container_width=True)
