@@ -6,11 +6,6 @@ import plotly.graph_objects as go
 # --- Page config must come first ---
 st.set_page_config(page_title="Sleep Duration Predictor", layout="centered")
 
-# --- Custom background and style ---
-import streamlit as st
-
-st.set_page_config(page_title="Sleep App", layout="centered")
-
 st.markdown(
     """
     <style>
