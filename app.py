@@ -10,15 +10,13 @@ st.set_page_config(page_title="Sleep Duration Predictor", layout="centered")
 st.markdown(
     """
     <style>
-    /* Set full page background image */
     .stApp {
-        background-image: url("https://images.unsplash.com/photo-1713262281979-f3b9de9342c6?auto=format&fit=crop&w=1600&q=80");
+        background-image: url("https://images.unsplash.com/photo-1713262281979-f3b9de9342c6");
         background-size: cover;
         background-position: center;
         background-attachment: fixed;
     }
 
-    /* Semi-transparent container for better contrast */
     .block-container {
         background-color: rgba(255, 255, 255, 0.90);
         padding: 2rem;
