@@ -7,14 +7,17 @@ import plotly.graph_objects as go
 st.set_page_config(page_title="Sleep Duration Predictor", layout="centered")
 
 # --- Custom background and style ---
+import streamlit as st
+
+st.set_page_config(page_title="Sleep App", layout="centered")
+
 st.markdown(
     """
     <style>
-    [data-testid="stAppViewContainer"] > .main {
-        background-image: url("https://images.unsplash.com/photo-1713262281979-f3b9de9342c6");
+    .stApp {
+        background-image: url("https://images.unsplash.com/photo-1509021436665-8f07dbf5bf1d?auto=format&fit=crop&w=1600&q=80");
         background-size: cover;
         background-position: center;
-        background-repeat: no-repeat;
         background-attachment: fixed;
     }
     </style>
