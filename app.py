@@ -10,23 +10,12 @@ st.set_page_config(page_title="Sleep Duration Predictor", layout="centered")
 st.markdown(
     """
     <style>
-    .stApp {
+    [data-testid="stAppViewContainer"] > .main {
         background-image: url("https://images.unsplash.com/photo-1713262281979-f3b9de9342c6");
         background-size: cover;
         background-position: center;
+        background-repeat: no-repeat;
         background-attachment: fixed;
-    }
-
-    .block-container {
-        background-color: rgba(255, 255, 255, 0.90);
-        padding: 2rem;
-        border-radius: 12px;
-        box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
-    }
-
-    h1, h2, h3 {
-        color: #1f4e79;
-        text-align: center;
     }
     </style>
     """,
