@@ -12,7 +12,7 @@ st.markdown(
     <style>
     /* Set full page background image */
     .stApp {
-        background-image: url("https://unsplash.com/photos/view-of-mountains-during-golden-hour-CDu0x1Aiils");
+        background-image: url("https://images.unsplash.com/photo-1713262281979-f3b9de9342c6?auto=format&fit=crop&w=1600&q=80");
         background-size: cover;
         background-position: center;
         background-attachment: fixed;
