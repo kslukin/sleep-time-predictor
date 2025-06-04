@@ -3,15 +3,46 @@ import pandas as pd
 import joblib
 import plotly.graph_objects as go
 
-# Load model
+# --- Page config must come first ---
+st.set_page_config(page_title="Sleep Duration Predictor", layout="centered")
+
+# --- Custom background and style ---
+st.markdown(
+    """
+    <style>
+    /* Set full page background image */
+    .stApp {
+        background-image: url("https://images.unsplash.com/photo-1509021436665-8f07dbf5bf1d?auto=format&fit=crop&w=1400&q=60");
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+    }
+
+    /* Semi-transparent container for better contrast */
+    .block-container {
+        background-color: rgba(255, 255, 255, 0.90);
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+    }
+
+    h1, h2, h3 {
+        color: #1f4e79;
+        text-align: center;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+# --- Load model ---
 model = joblib.load("model.pkl")
 
-# Page settings
-st.set_page_config(page_title="Sleep Duration Predictor", layout="centered")
+# --- Title ---
 st.title("💤 Sleep Duration Predictor")
 st.markdown("Estimate your predicted sleep duration based on your daily habits.")
 
-# Sliders with emojis
+# --- Input sliders ---
 st.subheader("📝 Your Daily Inputs")
 workout = st.slider("🟢 Workout Time (hours)", 0.0, 3.0, 1.0)
 reading = st.slider("🟢 Reading Time (hours)", 0.0, 3.0, 1.0)
@@ -20,19 +51,16 @@ work = st.slider("🔴 Work Hours", 0.0, 12.0, 8.0)
 caffeine = st.slider("🔴 Caffeine Intake (mg)", 0.0, 300.0, 100.0)
 relax = st.slider("🟢 Relaxation Time (hours)", 0.0, 3.0, 1.0)
 
-# Prepare input
+# --- Predict ---
 features = ["WorkoutTime", "ReadingTime", "PhoneTime", "WorkHours", "CaffeineIntake", "RelaxationTime"]
 values = [workout, reading, phone, work, caffeine, relax]
 input_data = pd.DataFrame([values], columns=features)
 
-# Predict
 if st.button("🔍 Predict Sleep Time"):
     prediction = model.predict(input_data)[0]
     st.success(f"🛌 Your predicted sleep duration is **{prediction:.2f} hours**")
 
-
-    # SLEEP GAUGE
-    # ----------------------------
+    # --- Sleep Gauge ---
     fig2 = go.Figure(go.Indicator(
         mode="gauge+number",
         value=prediction,
@@ -54,33 +82,32 @@ if st.button("🔍 Predict Sleep Time"):
             }
         }
     ))
-
     fig2.update_layout(height=350, margin=dict(t=30, b=10, l=30, r=30))
     st.plotly_chart(fig2)
 
-    # Insightful feedback
-    st.markdown("### 🧾 Interpreting Your Inputs:")
-    insights = []
+    # --- Feedback block ---
+    st.markdown("### 🔍 Insight Based on Your Habits")
+    feedback = []
 
     if caffeine > 200:
-        insights.append("☕ Your caffeine intake is quite high and may reduce sleep quality.")
+        feedback.append("☕ High caffeine intake might reduce sleep quality.")
     elif caffeine < 50:
-        insights.append("✅ Low caffeine intake is favorable for better sleep.")
+        feedback.append("✅ Low caffeine intake supports better sleep.")
 
     if phone > 5:
-        insights.append("📱 High phone usage might delay your sleep onset.")
+        feedback.append("📱 High phone usage can delay falling asleep.")
 
     if reading >= 1.5:
-        insights.append("📘 Great! Reading time is associated with better sleep hygiene.")
+        feedback.append("📘 Great! Reading improves sleep hygiene.")
 
     if relax >= 2:
-        insights.append("🧘 You're giving yourself enough time to unwind — that helps sleep.")
+        feedback.append("🧘 Relaxation before bed is beneficial.")
 
     if workout < 0.5:
-        insights.append("🏃 Consider adding light workouts — it can improve sleep.")
+        feedback.append("🏃 Consider adding light exercise to improve sleep.")
 
-    if not insights:
-        st.markdown("Looks like your habits are pretty balanced! ✅")
+    if not feedback:
+        st.markdown("✅ Your lifestyle looks well-balanced!")
     else:
-        for item in insights:
-            st.markdown(f"- {item}")
+        for point in feedback:
+            st.markdown(f"- {point}")
