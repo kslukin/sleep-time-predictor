@@ -10,11 +10,11 @@ model = joblib.load("model.pkl")
 st.set_page_config(page_title="Sleep Predictor", layout="centered")
 
 # Title
-st.title("😴 Sleep Duration Predictor")
+st.title("💤 Sleep Duration Predictor")
 st.markdown("Estimate your sleep duration based on your daily habits.")
 
 # Input sliders
-st.subheader("🧠 Your Daily Inputs")
+st.subheader("📝 Your Daily Inputs")
 
 workout = st.slider("🟢 Workout Time (hours)", 0.0, 3.0, 1.0)
 reading = st.slider("🟢 Reading Time (hours)", 0.0, 3.0, 1.0)
