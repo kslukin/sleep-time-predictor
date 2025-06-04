@@ -12,7 +12,7 @@ st.markdown(
     <style>
     /* Set full page background image */
     .stApp {
-        background-image: url("https://unsplash.com/illustrations/beautiful-western-desert-landscape-with-sky-rock-cliff-mountain-vector-illustration-BcsNM7hT-nI");
+        background-image: url("https://unsplash.com/illustrations/a-cat-watches-the-moonlit-night-through-a-window-dGpZaoXRSxs");
         background-size: cover;
         background-position: center;
         background-attachment: fixed;
