@@ -8,11 +8,11 @@ model = joblib.load("model.pkl")
 
 # Page settings
 st.set_page_config(page_title="Sleep Duration Predictor", layout="centered")
-st.title("😴 Sleep Duration Predictor")
+st.title("💤 Sleep Duration Predictor")
 st.markdown("Estimate your predicted sleep duration based on your daily habits.")
 
 # Sliders with emojis
-st.subheader("🧠 Your Daily Inputs")
+st.subheader("📝 Your Daily Inputs")
 workout = st.slider("🟢 Workout Time (hours)", 0.0, 3.0, 1.0)
 reading = st.slider("🟢 Reading Time (hours)", 0.0, 3.0, 1.0)
 phone = st.slider("🔴 Phone Usage Time (hours)", 0.0, 10.0, 2.0)
@@ -30,36 +30,8 @@ if st.button("🔍 Predict Sleep Time"):
     prediction = model.predict(input_data)[0]
     st.success(f"🛌 Your predicted sleep duration is **{prediction:.2f} hours**")
 
-    # ----------------------------
-    # 1️⃣ STACKED BAR CHART
-    # ----------------------------
-    import numpy as np
 
-    importances = model.feature_importances_
-    contributions = np.array(values) * importances
-
-    fig1 = go.Figure()
-    fig1.add_trace(go.Bar(
-        x=["Sleep Time"],
-        y=contributions,
-        name="Contributions",
-        marker_color=["#A6E3A1", "#B7E4C7", "#FFADAD", "#FFADAD", "#FFADAD", "#A0C4FF"],
-        text=features,
-        hovertemplate='%{text}: %{y:.2f} hours',
-    ))
-
-    fig1.update_layout(
-        title="📊 Feature Contributions to Predicted Sleep Time",
-        barmode='stack',
-        yaxis_title="Hours",
-        showlegend=False,
-        height=400
-    )
-
-    st.plotly_chart(fig1)
-
-    # ----------------------------
-    # 2️⃣ SLEEP GAUGE
+    # SLEEP GAUGE
     # ----------------------------
     fig2 = go.Figure(go.Indicator(
         mode="gauge+number",
