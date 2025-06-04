@@ -1,3 +1,9 @@
+# In this project, I use RandomForestRegressor because it handles noisy synthetic data well,
+# requires minimal preprocessing, and performs reliably on tabular regression tasks.
+# For evaluation, I use both MAE and R²:
+# - MAE provides an intuitive measure of average prediction error in hours,
+# - R² shows how well the model explains variance in sleep duration.
+
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestRegressor
