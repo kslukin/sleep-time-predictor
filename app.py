@@ -12,7 +12,7 @@ st.markdown(
     <style>
     /* Background image */
     .stApp {
-        background-image: url("https://images.unsplash.com/vector-1747674822525-7c0cfff8a9af?q=80&w=2952&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+        background-image: url("https://images.unsplash.com/vector-1746092444052-661ae4de13a4?q=80&w=3264&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
         background-size: cover;
         background-position: center;
         background-attachment: fixed;
