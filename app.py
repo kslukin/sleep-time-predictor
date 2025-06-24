@@ -12,7 +12,7 @@ st.markdown(
     <style>
     /* Background image */
     .stApp {
-        background-image: url("https://raw.githubusercontent.com/kslukin/sleep-time-predictor/main/Background_1.png");
+        background-image: url("https://raw.githubusercontent.com/kslukin/sleep-time-predictor/main/Background_2.png");
         background-size: cover;
         background-position: center;
         background-attachment: fixed;
