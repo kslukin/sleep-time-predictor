@@ -3,7 +3,7 @@ import pandas as pd
 import joblib
 import plotly.graph_objects as go
 
-# --- Page config must come first ---
+# --- Page config ---
 st.set_page_config(page_title="Sleep Duration Predictor", layout="centered")
 
 # --- Background image and styled container ---
